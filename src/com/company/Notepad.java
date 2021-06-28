@@ -47,8 +47,8 @@ public class Notepad {
 
         mainFrame.add(new JScrollPane(textArea), BorderLayout.CENTER);
         mainFrame.add(statusLabel, BorderLayout.SOUTH);
-        mainFrame.add(new JLabel(" "), BorderLayout.EAST);
-        mainFrame.add(new JLabel(" "), BorderLayout.WEST);
+        mainFrame.add(new JLabel("  "), BorderLayout.EAST);
+        mainFrame.add(new JLabel("  "), BorderLayout.WEST);
 
         mainFrame.setJMenuBar(createMenuBar());
         createPopupMenu();
@@ -412,7 +412,13 @@ public class Notepad {
                 case "Redo" -> {
                     if(undoManager.canRedo()) undoManager.redo();
                 }
-                case "Find", "Help Topic", "Font", "Replace", "Find Next" -> {}
+                case "Find", "Help Topic", "Font", "Replace", "Find Next" -> {
+                    JOptionPane.showMessageDialog(
+                            mainFrame,
+                            "This functionality hasn't been added to the application yet.",
+                            "Not available.",
+                            JOptionPane.INFORMATION_MESSAGE);
+                }
                 case "Go to" -> {
                     if(textArea.getText().length()==0) return;
                     goTo();
@@ -455,6 +461,6 @@ public class Notepad {
         }
 
     }
-    //Created by Asjad Iqbal
+    //--------Created by Asjad Iqbal----------
 }
 
