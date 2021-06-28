@@ -6,3 +6,5 @@ It has almost all the features of a regular notepad including file operations, u
 There are still a few features to be added to the project: Find, Find Next, Replace and Font.
 
 Requirements: Java Development Kit(JDK) version 15 or higher.
+
+You can directly run the application by downloading the JAR file (myNote.jar), provided you have JDK 15 or higher.
