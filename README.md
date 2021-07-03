@@ -7,4 +7,5 @@ There are still a few features to be added to the project: Find, Find Next, Repl
 
 Requirements: Java Development Kit(JDK) version 15 or higher.
 
+# Download Application:
 You can directly run the application by downloading the JAR file (myNote.jar), provided you have JDK 15 or higher.

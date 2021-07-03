@@ -1,5 +1,9 @@
 package com.company;
 
+import com.formdev.flatlaf.intellijthemes.FlatDarkFlatIJTheme;
+import com.formdev.flatlaf.intellijthemes.FlatDarkPurpleIJTheme;
+import com.formdev.flatlaf.intellijthemes.FlatLightFlatIJTheme;
+
 import javax.swing.*;
 import javax.swing.event.*;
 import javax.swing.undo.UndoManager;
@@ -41,6 +45,7 @@ public class Notepad {
 
     //Method to setup major GUI components
     private void prepareGUI(){
+        FlatLightFlatIJTheme.setup();
         mainFrame = new JFrame(fileName + " - " + appName);
         textArea = new JTextArea(30,70);
         statusLabel = new JLabel("||    Ln 1, Col 1", JLabel.RIGHT);
@@ -104,14 +109,6 @@ public class Notepad {
                 else mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             }
         });
-        try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (ClassNotFoundException |
-                InstantiationException |
-                IllegalAccessException |
-                UnsupportedLookAndFeelException e) {
-            e.printStackTrace();
-        }
         mainFrame.setVisible(true);
     }
 
@@ -186,11 +183,16 @@ public class Notepad {
         JRadioButtonMenuItem darkThemeMI = new JRadioButtonMenuItem("Dark", false);
         darkThemeMI.setActionCommand("darkTheme");
         darkThemeMI.addActionListener(miListener);
+        JRadioButtonMenuItem purpleThemeMI = new JRadioButtonMenuItem("Dark Purple", false);
+        purpleThemeMI.setActionCommand("darkPurple");
+        purpleThemeMI.addActionListener(miListener);
         ButtonGroup themeGroup = new ButtonGroup();
         themeGroup.add(lightThemeMI);
         themeGroup.add(darkThemeMI);
+        themeGroup.add(purpleThemeMI);
         themeSubMenu.add(lightThemeMI);
         themeSubMenu.add(darkThemeMI);
+        themeSubMenu.add(purpleThemeMI);
         formatM.add(themeSubMenu);
 
         //Creating View menu
@@ -363,6 +365,20 @@ public class Notepad {
         fgDialog.setVisible(true);
     }
 
+    private void applyTheme(String command) {
+        try {
+            switch (command) {
+                case "Light" -> UIManager.setLookAndFeel(new FlatLightFlatIJTheme());
+                case "Dark" -> UIManager.setLookAndFeel(new FlatDarkFlatIJTheme());
+                case "Purple" -> UIManager.setLookAndFeel(new FlatDarkPurpleIJTheme());
+            }
+        } catch (UnsupportedLookAndFeelException e) {
+            e.printStackTrace();
+        }
+        SwingUtilities.updateComponentTreeUI(mainFrame);
+        mainFrame.pack();
+    }
+
 
     //Driver Function
     public static void main(String[] args) {
@@ -432,14 +448,9 @@ public class Notepad {
                 case "Text Color" -> fgColorDialog();
                 case "BG Color" -> bgColorDialog();
                 case "Time/Date" -> textArea.insert(new Date().toString(), textArea.getSelectionStart());
-                case "lightTheme" -> {
-                    textArea.setBackground(Color.WHITE);
-                    textArea.setForeground(Color.BLACK);
-                }
-                case "darkTheme" -> {
-                    textArea.setForeground(Color.LIGHT_GRAY);
-                    textArea.setBackground(Color.DARK_GRAY);
-                }
+                case "lightTheme" -> applyTheme("Light");
+                case "darkTheme" -> applyTheme("Dark");
+                case "darkPurple" -> applyTheme("Purple");
                 //TODO More actions to be added for menus.
 
                 //View menu actions
